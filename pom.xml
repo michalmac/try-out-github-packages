@@ -69,15 +69,6 @@
             <name>GitHub Maven Packages</name>
             <url>https://maven.pkg.github.com/michalmac/try-out-github-packages</url>
         </snapshotRepository>
-        <repository>
-            <id>bintray</id>
-            <url>https://api.bintray.com/maven/matsim/matsim/matsim</url>
-        </repository>
-        <snapshotRepository>
-            <id>oss-jfrog-artifactory</id>
-            <name>artifactory-snapshots</name>
-            <url>https://oss.jfrog.org/oss-snapshot-local</url>
-        </snapshotRepository>
     </distributionManagement>
     <!-- Some commonly used dependencies with fixed versions, please try to avoid replicating the versions in other poms -->
     <dependencyManagement>
