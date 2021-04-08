@@ -10,6 +10,7 @@
     <modules>
         <module>matsim</module>
         <module>examples</module>
+        <module>benchmark</module>
         <module>contribs</module>
     </modules>
 
