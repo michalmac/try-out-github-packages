@@ -1,0 +1,35 @@
+name: deploy-on-pr-merge
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout git repo
+        uses: actions/checkout@v2
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Publish to GitHub Packages
+        run: mvn deploy --batch-mode --fail-at-end -Dmaven.javadoc.skip -Dsource.skip -Dassembly.skipAssembly=true -Dmaven.test.skip=true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+    env:
+      MAVEN_OPTS: -Xmx2g

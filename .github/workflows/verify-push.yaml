@@ -54,11 +54,6 @@ jobs:
         run: mvn verify --batch-mode -Dmaven.test.redirectTestOutputToFile -Dmatsim.preferLocalDtds=true --fail-at-end -Dmaven.javadoc.skip -Dsource.skip -Dassembly.skipAssembly=true
         working-directory: ${{matrix.module}}
 
-      - name: Publish to GitHub Packages
-        run: mvn deploy --batch-mode --fail-at-end -Dmaven.javadoc.skip -Dsource.skip -Dassembly.skipAssembly=true
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-
     env:
       MAVEN_OPTS: -Xmx2g
 
