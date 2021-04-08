@@ -27,7 +27,7 @@ jobs:
           java-version: 11
 
       - name: Set MATSim version
-        run: mvn versions:set -DnewVersion=${{ github.event.release.tag_name }} -DgenerateBackupPoms=false
+        run: mvn versions:set --batch-mode -DnewVersion=${{ github.event.release.tag_name }} -DgenerateBackupPoms=false
 
       - name: Publish to GitHub Packages
         run: mvn deploy --batch-mode --fail-at-end -Dassembly.skipAssembly=true -DskipTests
