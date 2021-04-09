@@ -30,7 +30,7 @@ jobs:
         run: mvn versions:set --batch-mode -DnewVersion=${{ github.event.release.tag_name }} -DgenerateBackupPoms=false
 
       - name: Publish to GitHub Packages
-        run: mvn -pl -distribution deploy --batch-mode -Dmaven.javadoc.skip -Dassembly.skipAssembly=true -Dmaven.test.skip=true
+        run: mvn -pl -distribution deploy --batch-mode -Dmaven.javadoc.skip -Dassembly.skipAssembly=true -DskipTests
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
