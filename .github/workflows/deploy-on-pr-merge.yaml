@@ -27,7 +27,7 @@ jobs:
           java-version: 11
 
       - name: Publish to GitHub Packages
-        run: mvn deploy --batch-mode --fail-at-end -Dmaven.javadoc.skip -Dassembly.skipAssembly=true -Dmaven.test.skip=true
+        run: mvn -pl -distribution deploy --batch-mode -Dmaven.javadoc.skip -Dassembly.skipAssembly=true -Dmaven.test.skip=true
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
