@@ -9,7 +9,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  verify:
     #run if push or pull_requests from fork
     if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
 
