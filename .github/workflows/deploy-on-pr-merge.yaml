@@ -26,7 +26,11 @@ jobs:
         with:
           java-version: 11
 
-      - name: Publish to GitHub Packages
+      # Build and publish are separated so we start deploying only after the whole build is successful
+      - name: Build jars
+        run: mvn -pl -distribution package --batch-mode -Dmaven.javadoc.skip -Dassembly.skipAssembly=true -DskipTests
+
+      - name: Publish jars to GitHub Packages
         run: mvn -pl -distribution deploy --batch-mode -Dmaven.javadoc.skip -Dassembly.skipAssembly=true -DskipTests
         env:
           GITHUB_TOKEN: ${{ github.token }}
