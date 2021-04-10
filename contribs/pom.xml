@@ -76,6 +76,7 @@
 	</build>
 
 	<modules>
+		<module>cadytsIntegration</module>
 		<module>dvrp</module>
 	</modules>
 
