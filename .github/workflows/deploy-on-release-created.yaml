@@ -43,9 +43,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ github.token }}
-          file: matsim-${{ github.event.release.tag_name }}-release.zip
+          file: matsim/target/matsim-${{ github.event.release.tag_name }}-release.zip
           tag: ${{ github.event.release.tag_name }}
-          path: matsim/target/matsim-${{ github.event.release.tag_name }}-release.zip
 
     env:
       MAVEN_OPTS: -Xmx2g
