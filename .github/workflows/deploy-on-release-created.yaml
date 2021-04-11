@@ -29,12 +29,13 @@ jobs:
       - name: Set MATSim version
         run: mvn versions:set --batch-mode -DnewVersion=${{ github.event.release.tag_name }} -DgenerateBackupPoms=false
 
-      # Build and publish are separated so we start deploying only after the whole build is successful
+      # Build and publish are separated so we start deploying only after all jars are built successfully
       - name: Build jars
         run: mvn -pl -distribution package --batch-mode -Dmaven.javadoc.skip -Dassembly.skipAssembly=true -DskipTests
 
       - name: Publish jars to GitHub Packages
-        run: mvn -pl -distribution deploy --batch-mode -Dmaven.javadoc.skip -Dassembly.skipAssembly=true -DskipTests
+        # fail at end to deploy as many jars as possible
+        run: mvn -pl -distribution deploy --batch-mode --fail-at-end -Dmaven.javadoc.skip -Dassembly.skipAssembly=true -DskipTests
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
