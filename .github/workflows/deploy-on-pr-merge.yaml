@@ -31,7 +31,7 @@ jobs:
           java-version: 11
 
       - name: Set MATSim version
-        if: github.event == 'pull_request'
+        if: github.event_name == 'pull_request'
         run: |
           echo $(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | sed 's/SNAPSHOT/)
           echo ${{ github.event.pull_request.number }}
