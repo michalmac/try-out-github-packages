@@ -6,12 +6,12 @@ on:
       - master # snapshot deployment
   pull_request:
     types:
-      - closed # pr-labelled deployment after PR is merged
+      - closed # pr-labelled deployment (only if PR is merged to master)
 
 jobs:
   deploy-snapshot:
     name: deploy snapshot/PR-labelled version
-    if: github.event_name == 'push' || (github.event.pull_request.merged == true && github.event.pull_request.base.ref = 'master')
+    if: github.event_name == 'push' || (github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master')
 
     runs-on: ubuntu-latest
 
@@ -32,7 +32,7 @@ jobs:
         with:
           java-version: 11
 
-      - name: Set MATSim version
+      - name: Set MATSim version (if PR-labelled version)
         if: github.event_name == 'pull_request'
         run: mvn versions:set --batch-mode -DnewVersion=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | sed 's/SNAPSHOT//')PR${{ github.event.pull_request.number }} -DgenerateBackupPoms=false
 
