@@ -10,8 +10,8 @@ on:
 
 jobs:
   deploy-snapshot:
-    name: Deploy snapshot/PR-labelled version
-    if: github.event_name == 'push' || github.event.pull_request.merged == true
+    name: deploy snapshot/PR-labelled version
+    if: github.event_name == 'push' || (github.event.pull_request.merged == true && github.event.pull_request.base.ref = 'master')
 
     runs-on: ubuntu-latest
 
