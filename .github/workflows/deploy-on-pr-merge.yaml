@@ -3,12 +3,14 @@ name: deploy-on-pr-merge
 on:
   push:
     branches:
-      - master
+      - master # snapshot deployment
   pull_request:
-    types: [ closed ]
+    types:
+      - closed # pr-labelled deployment after PR is merged
 
 jobs:
   deploy-snapshot:
+    name: Deploy snapshot/PR-labelled version
     if: github.event_name == 'push' || github.event.pull_request.merged == true
 
     runs-on: ubuntu-latest
