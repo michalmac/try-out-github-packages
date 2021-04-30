@@ -53,11 +53,11 @@ jobs:
 
       - name: Build module (with dependencies)
         if: ${{matrix.module != 'matsim' || steps.detect-changes.outputs.outside-contribs == 'true'}}
-        run: mvn install --batch-mode --also-make --projects ${{matrix.module}} -DskipTests -Dmaven.javadoc.skip -Dsource.skip -Dassembly.skipAssembly=true
+        run: mvn install --batch-mode --also-make --projects ${{matrix.module}} -DskipTests -Dmaven.javadoc.skip -Dsource.skip
 
       - name: Test module
         if: ${{matrix.module != 'matsim' || steps.detect-changes.outputs.outside-contribs == 'true'}}
-        run: mvn verify --batch-mode -Dmaven.test.redirectTestOutputToFile -Dmatsim.preferLocalDtds=true --fail-at-end -Dmaven.javadoc.skip -Dsource.skip -Dassembly.skipAssembly=true
+        run: mvn verify --batch-mode -Dmaven.test.redirectTestOutputToFile -Dmatsim.preferLocalDtds=true --fail-at-end -Dmaven.javadoc.skip -Dsource.skip
         working-directory: ${{matrix.module}}
 
     env:
