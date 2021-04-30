@@ -35,7 +35,7 @@ jobs:
 
       - name: Publish jars to GitHub Packages
         # fail at end to deploy as many jars as possible
-        run: mvn -pl -distribution deploy --batch-mode --fail-at-end -Dmaven.javadoc.skip -Dassembly.skipAssembly=true -DskipTests -Dmaven.resources.skip=true -Dmaven.install.skip=true
+        run: mvn -pl -distribution deploy --batch-mode --fail-at-end -Dmaven.javadoc.skip -DskipTests -Dmaven.resources.skip=true -Dmaven.install.skip=true
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
