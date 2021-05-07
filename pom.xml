@@ -146,6 +146,7 @@
                         <configuration>
                             <linksource>true</linksource>
                             <doclint>none</doclint>
+                            <quiet>true</quiet>
                         </configuration>
                     </plugin>
                 </plugins>
