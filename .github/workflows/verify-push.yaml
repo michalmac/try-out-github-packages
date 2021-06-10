@@ -70,7 +70,8 @@ jobs:
 
   verify-all-jobs-successful:
     #run if push or pull_requests from fork
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
+#    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
+    if: ${{ always() }}
     needs: verify
     runs-on: ubuntu-latest
     steps:
