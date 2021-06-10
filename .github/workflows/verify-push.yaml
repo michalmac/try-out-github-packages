@@ -3,14 +3,14 @@ name: verify-push
 on:
   push:
     branches-ignore:
-      - 'master' #no need to run after merging to master
+      - 'master' # no need to run after merging to master
     tags-ignore:
-      - '*' #do not run on pushing tags (see deploy-on-release-created)
+      - '*' # do not run on pushing tags (see deploy-on-release-created)
   pull_request:
 
 jobs:
   verify:
-    #run if push or pull_requests from fork
+    # run if push or pull_requests from fork
     if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
 
     runs-on: ubuntu-latest
@@ -71,7 +71,18 @@ jobs:
     if: always() && (github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository)
     needs: verify
     runs-on: ubuntu-latest
+
+    # When running this workflow for internal PRs "verify-all-jobs-successful" is marked as skipped,
+    # which GitHub takes as a green flag and will allow merging before "verify-all-jobs-successful"
+    # is completed for the push event.
+    # One way to avoid this is to create a job from a matrix on the fly. They will be created for
+    # push events and PR events from forks (but not for PR events coming from internal forks),
+    # so we can safely add a check ""verify-all-jobs-successful(push-or-external-PR)"
+    strategy:
+      matrix:
+        name: [ "push-or-external-PR" ]
+
     steps:
       - name: check if the whole job matrix is successful
         if: needs.verify.result != 'success'
-        run: exit 1
+        run: exit 1 # fail if "verify" was not successful
