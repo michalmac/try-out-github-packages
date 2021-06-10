@@ -104,5 +104,5 @@ jobs:
           NEEDS_CONTEXT: ${{ toJSON(needs) }}
         run: echo "$NEEDS_CONTEXT"
       - name: all jobs successful
-        if: ${{ needs.verify.result != 'success' }}
+        if: ${{ needs.verify.result != 'success' && needs.verify.result != 'skipped' }}
         run: exit 1
