@@ -66,21 +66,16 @@ jobs:
     env:
       MAVEN_OPTS: -Xmx2g
 
-  verify-all-jobs-successful-on-push:
-    # always() - to ensure this job is executed (regardless of the status of the previous job)
-    if: always() && github.event_name == 'push'
-    needs: verify
-    runs-on: ubuntu-latest
-    steps:
-      - name: check if the whole job matrix is successful (on push)
-        if: needs.verify.result != 'success'
-        run: exit 1 # fail if "verify" was not successful
-
-  verify-all-jobs-successful-external-PR:
+  verify-all-jobs-successful:
     # always() - to ensure this job is executed (regardless of the status of the previous job)
     if: always() && github.event.pull_request.head.repo.full_name != github.repository
     needs: verify
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        event-name: ${{ github.event_name }}
+
     steps:
       - name: check if the whole job matrix is successful (external PR)
         if: needs.verify.result != 'success'
