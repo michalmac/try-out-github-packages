@@ -3,14 +3,14 @@ name: verify-push
 on:
   push:
     branches-ignore:
-      - 'master' #no need to run after merging to master
+      - 'master' # no need to run after merging to master
     tags-ignore:
-      - '*' #do not run on pushing tags (see deploy-on-release-created)
+      - '*' # do not run on pushing tags (see deploy-on-release-created)
   pull_request:
 
 jobs:
   verify:
-    #run if push or pull_requests from fork
+    # run if push or pull_requests from fork
     if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
 
     runs-on: ubuntu-latest
@@ -66,12 +66,22 @@ jobs:
     env:
       MAVEN_OPTS: -Xmx2g
 
-  verify-all-jobs-successful:
+  verify-all-jobs-successful-on-push:
     # always() - to ensure this job is executed (regardless of the status of the previous job)
-    if: always() && (github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository)
+    if: always() && github.event_name == 'push'
     needs: verify
     runs-on: ubuntu-latest
     steps:
-      - name: check if the whole job matrix is successful
+      - name: check if the whole job matrix is successful (on push)
         if: needs.verify.result != 'success'
-        run: exit 1
+        run: exit 1 # fail if "verify" was not successful
+
+  verify-all-jobs-successful-external-PR:
+    # always() - to ensure this job is executed (regardless of the status of the previous job)
+    if: always() && github.event.pull_request.head.repo.full_name != github.repository
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - name: check if the whole job matrix is successful (external PR)
+        if: needs.verify.result != 'success'
+        run: exit 1 # fail if "verify" was not successful
