@@ -66,7 +66,7 @@ jobs:
     env:
       MAVEN_OPTS: -Xmx2g
 
-    continue-on-error: true #to always proceed to "verify-all-jobs-successful"
+    #continue-on-error: true #to always proceed to "verify-all-jobs-successful"
 
   verify-all-jobs-successful:
     #run if push or pull_requests from fork
@@ -103,5 +103,5 @@ jobs:
           NEEDS_CONTEXT: ${{ toJSON(needs) }}
         run: echo "$NEEDS_CONTEXT"
       - name: all jobs successful
-        if: ${{ needs.verify.*.result != 'success' }}
+        if: ${{ needs.verify.result != 'success' }}
         run: exit 1
