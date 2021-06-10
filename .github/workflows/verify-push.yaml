@@ -66,8 +66,6 @@ jobs:
     env:
       MAVEN_OPTS: -Xmx2g
 
-    #continue-on-error: true #to always proceed to "verify-all-jobs-successful"
-
   verify-all-jobs-successful:
     # always() - to ensure this job is executed (regardless of the status of the previous job)
     if: always() && (github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository)
