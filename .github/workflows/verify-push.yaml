@@ -72,6 +72,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: all jobs successful
-        run: echo "all jobs successful"
+        if: ${{ needs.verify.result != 'success' }}
+        run: exit 1
 
 
