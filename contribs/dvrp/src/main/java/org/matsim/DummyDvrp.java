@@ -2,7 +2,7 @@ package org.matsim;
 
 public class DummyDvrp {
 
-  public static void main(String[] args) {
+  public static void ma in(String[] args) {
     System.out.println("Hello, dummy dvrp!");
   }
 }
