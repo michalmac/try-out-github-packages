@@ -74,7 +74,8 @@ jobs:
 
     strategy:
       matrix:
-        event-name: ${{ github.event_name }}
+        event-name:
+          - ${{ github.event_name }}
 
     steps:
       - name: check if the whole job matrix is successful (external PR)
