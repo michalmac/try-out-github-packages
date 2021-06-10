@@ -69,7 +69,8 @@ jobs:
     #continue-on-error: true #to always proceed to "verify-all-jobs-successful"
 
   verify-all-jobs-successful:
-    if: ${{ always() }} # always execute this job (regardless of the status of the previous job)
+    # always() - to ensure this job is executed (regardless of the status of the previous job)
+    if: always() && (github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository)
     needs: verify
     runs-on: ubuntu-latest
     steps:
@@ -101,6 +102,6 @@ jobs:
         env:
           NEEDS_CONTEXT: ${{ toJSON(needs) }}
         run: echo "$NEEDS_CONTEXT"
-      - name: all jobs successful
-        if: (github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository) && needs.verify.result != 'success'
+      - name: check if the whole job matrix is successful
+        if: needs.verify.result != 'success'
         run: exit 1
