@@ -68,7 +68,7 @@ jobs:
 
   verify-all-jobs-successful:
     # always() - to ensure this job is executed (regardless of the status of the previous job)
-    if: always() && github.event.pull_request.head.repo.full_name != github.repository
+    if: always() #&& github.event.pull_request.head.repo.full_name != github.repository
     needs: verify
     runs-on: ubuntu-latest
 
