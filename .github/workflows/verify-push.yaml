@@ -74,10 +74,9 @@ jobs:
 
     strategy:
       matrix:
-        event-name:
-          - ${{ github.event_name }}
+        name: ["push-or-external-PR"]
 
     steps:
-      - name: check if the whole job matrix is successful (external PR)
+      - name: check if the whole job matrix is successful
         if: needs.verify.result != 'success'
         run: exit 1 # fail if "verify" was not successful
