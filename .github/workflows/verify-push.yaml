@@ -64,3 +64,12 @@ jobs:
 
     env:
       MAVEN_OPTS: -Xmx2g
+
+  verify-all-jobs-successful:
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - name: all jobs successful
+        run: echo "all jobs successful"
+
+
